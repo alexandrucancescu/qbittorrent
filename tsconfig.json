@@ -1,8 +1,10 @@
 {
   "extends": "@sindresorhus/tsconfig",
   "compilerOptions": {
+    "module": "node16",
     "outDir": "dist",
     "noPropertyAccessFromIndexSignature": false,
-    "erasableSyntaxOnly": false
+    "erasableSyntaxOnly": false,
+    "allowSyntheticDefaultImports": true
   }
 }

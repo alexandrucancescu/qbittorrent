@@ -1,6 +1,9 @@
+import { promisify } from 'node:util';
+
 import { parse as cookieParse } from 'cookie';
 import { FormData } from 'node-fetch-native';
 import { ofetch } from 'ofetch';
+import { remote as parseRemoteTorrent } from 'parse-torrent';
 import type { Jsonify } from 'type-fest';
 import { joinURL } from 'ufo';
 import { base64ToUint8Array, isUint8Array, stringToUint8Array } from 'uint8array-extras';
@@ -15,7 +18,6 @@ import type {
   TorrentClientConfig,
   TorrentClientState,
 } from '@ctrl/shared-torrent';
-import { hash } from '@ctrl/torrent-file';
 
 import { normalizeTorrentData } from './normalizeTorrentData.js';
 import type {
@@ -61,6 +63,8 @@ const defaults: TorrentClientConfig = {
   password: '',
   timeout: 5000,
 };
+
+const parseTorrent = promisify(parseRemoteTorrent);
 
 export class QBittorrent implements TorrentClient {
   /**
@@ -765,7 +769,9 @@ export class QBittorrent implements TorrentClient {
         torrent = stringToUint8Array(torrent);
       }
 
-      torrentHash = hash(torrent);
+      const parsed = await parseTorrent(torrent);
+
+      torrentHash = parsed?.infoHash!;
       await this.addTorrent(torrent, torrentOptions);
     }
 

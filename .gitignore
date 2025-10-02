@@ -39,3 +39,5 @@ yarn.lock
 .DS_Store
 
 .idea/
+.codebuddy
+test

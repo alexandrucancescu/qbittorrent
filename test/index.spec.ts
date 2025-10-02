@@ -7,9 +7,9 @@ import { afterEach, expect, it } from 'vitest';
 import { QBittorrent, TorrentFilePriority } from '../src/index.js';
 
 const baseUrl = 'http://localhost:8080';
-const torrentName = 'ubuntu-18.04.1-desktop-amd64.iso';
+const torrentName = 'Fido.2006.720p.BluRay.DD5.1.x264-Positive';
 const __dirname = new URL('.', import.meta.url).pathname;
-const torrentFilePath = path.join(__dirname, 'ubuntu-18.04.1-desktop-amd64.iso.torrent');
+const torrentFilePath = path.join(__dirname, 'test-torrent.txt');
 const torrentFileBuffer = readFileSync(torrentFilePath);
 const username = 'admin';
 const password = 'adminadmin';
@@ -90,7 +90,7 @@ it('should add normalized torrent with label', async () => {
     label: 'swag',
     startPaused: true,
   });
-  expect(res.id).toBe('e84213a794f3ccd890382a54a64ca68b7e925433');
+  expect(res.id).toBe('24221ffbb0a6b83e40a8ad60687be78a6fe11433');
   expect(res.label).toBe('swag');
   expect(res.name).toBe(torrentName);
   await waitForTorrent(client);
@@ -182,7 +182,7 @@ it('should get torrent piece hashes', async () => {
   const client = new QBittorrent({ baseUrl, username, password });
   const torrentId = await setupTorrent(client);
   const res = await client.torrentPieceHashes(torrentId);
-  expect(res.length).toBe(3726);
+  expect(res.length).toBe(4570);
 });
 it('should add/remove torrent tag', async () => {
   const client = new QBittorrent({ baseUrl, username, password });
